@@ -15,12 +15,21 @@ render - функция, которая принимает запрос, имя 
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from post.models import Product
 from django.utils import timezone
 
 
-# def test_view(request):
-#     if request.method == 'GET':
-#         return HttpResponse('Test view')
+
+def main_view(request):
+    if request.method == 'GET':
+        return render(request, 'index.html')
+
+# def main_view(request):
+#     return render(request, 'layouts/main.html')
+
+# def products_view(request):
+#     products = Product.objects.all()
+#     return render(request, 'products/main.html', {'products': products})
 
 
 def hello_view(request):
@@ -35,5 +44,22 @@ def current_date_view(request):
 def goodbye_view(request):
     if request.method == 'GET':
         return HttpResponse("Goodbye user!")
+
+
+def product_list_view(request):
+    if request.method == 'GET':
+        products = Product.objects.all()
+
+        context = {
+            'products': products,
+        }
+        return render(
+            request,
+            'products.html',
+            context=context
+        )
+
+
+
 
 
