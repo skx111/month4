@@ -15,14 +15,14 @@ render - функция, которая принимает запрос, имя 
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from post.models import Product
+from product.models import Product, Category
 from django.utils import timezone
 
 
 
 def main_view(request):
     if request.method == 'GET':
-        return render(request, 'index.html')
+        return render(request, 'product/index.html')
 
 # def main_view(request):
 #     return render(request, 'layouts/main.html')
@@ -55,9 +55,23 @@ def product_list_view(request):
         }
         return render(
             request,
-            'products.html',
+            'product/products.html',
             context=context
         )
+def category_list_view(request):
+    if request.method == 'GET':
+        categories = Category.objects.all()
+
+        context = {
+            'categories': categories,
+        }
+        return render(
+            request,
+            'product/categories.html',
+            context=context
+        )
+
+
 
 
 

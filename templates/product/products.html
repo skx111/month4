@@ -1,9 +1,8 @@
-{% extends 'index.html' %}
+{% extends 'product/index.html' %}
 
 {% block content %}
 
-
-    {% for products in products %}
+{% for product in products %}
     <div class="card" style="width: 18rem;">
         <img src="{{ product.image }}" class="card-img-top" alt="...">
         <div class="card-body">
