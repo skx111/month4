@@ -55,4 +55,5 @@ pip-cache/
 *.bak
 
 static
+media
 

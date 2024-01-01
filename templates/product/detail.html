@@ -1,0 +1,44 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+<h1>Product Detail</h1>
+
+<h2>{{ product.title }} </h2>
+
+<p>{{ product.text }}</p>
+
+<img src="/media/{{ product.image }}">
+
+<p>{{ product.created_at }}</p>
+
+{% for hashtag in product.hashtags.all %}
+    <a class="btn btn-primary" href="#">
+        <p>
+            #{{ hashtag.name }}
+        </p>
+    </a>
+{% endfor %}
+
+{% for category in product.categories.all %}
+    <p>
+        {{ category.text }}
+    </p>
+{% endfor %}
+
+    <h2>Reviews</h2>
+{% for review in reviews %}
+    <p>{{ review.user.username }} - Rating: {{ review.rating }} - {{ review.comment }}</p>
+{% endfor %}
+
+<h2>Create a Review</h2>
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>
+
+
+{% endblock %}

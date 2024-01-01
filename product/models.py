@@ -2,53 +2,12 @@
 models.py - Файл моделей приложения.
 '''
 
-from django.db import models
-
-# class Product(models.Model):
-#     photo = models.ImageField(upload_to='products', null=True, blank=True)
-#     name = models.CharField(max_length=150)
-#     description = models.TextField()
-#     price = models.IntegerField(default=0)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-# class BaseModel(models.Model):
-#     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-#     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-#
-#     class Meta:
-#         abstract = True
-#
-# class Category(BaseModel):
-#     name = models.CharField(max_length=255, verbose_name='Название')
-#
-#     def __str__(self) -> str:
-#         return f'{self.name}'
-#
-#     class Meta:
-#         db_table = 'category'
-#         verbose_name = 'Категория'
-#         verbose_name_plural = 'Категории'
-#
-#
-# class Product(BaseModel):
-#     image = models.ImageField(
-#         upload_to='products',
-#         null=True,
-#         blank=False,
-#         verbose_name='Фото'
-#         )
-#     title = models.CharField(max_length=255, verbose_name='Заголовок')
-#     text = models.TextField(null=True, blank=True, verbose_name='Текст')
-#     rate = models.FloatField(default=0, verbose_name='Рейтинг')
-#     category = models.ManyToManyField(
-#
-#     )
-
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
-# class Product(models.Model):
-#     title = models.CharField(max_length=255, default='Default Title')
+
 
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
@@ -111,5 +70,16 @@ class Category(BaseModel):
         db_table = 'categories'
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+
+class Review(models.Model):
+    product = models.ForeignKey('product', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.product.name} - {self.rating}'
 
 
