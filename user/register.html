@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+<h1>Register</h1>
+
+<form action="/auth/register/" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Submit</button>
+</form>
+    <form method="post" action="{% url 'register' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Register</button>
+</form>
+
+{% endblock %}

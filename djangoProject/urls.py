@@ -9,7 +9,7 @@ path - функция для создания маршрута.
 2) Обработчик (функция, которая будет обрабатывать запрос)
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from product import views
 from django.conf import settings
@@ -27,6 +27,8 @@ urlpatterns = [
     path('product/<int:product_id>/', views.product_detail_view),
     path('product/create/', views.product_create_view),
     path('category/create/', views.category_create_view),
+    path('', include('product.urls')),
+    path('auth/', include('user.urls')),
 
 ]
 
